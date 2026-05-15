@@ -1,0 +1,27 @@
+# Node
+node_modules/
+dist/
+*.log
+.DS_Store
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/schemas/
+
+# 打包生成的嵌入式 Node 运行时与构建缓存
+worker-runtime/
+build-runtime/
+
+# 本地调试产物
+.vite/
+coverage/
+.env
+.env.*
+!.env.example
+
+# 构建产物
+*.dmg
+*.app
+*.exe
+*.msi
+ruvector.db

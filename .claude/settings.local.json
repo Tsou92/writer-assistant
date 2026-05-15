@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(grep -E \"gitignore|git$\")",
+      "Bash(node -e \"const d = require\\('docx'\\); console.log\\(Object.keys\\(d\\).filter\\(k => /Heading|Para|TextRun|AlignmentType/.test\\(k\\)\\).sort\\(\\)\\);\")",
+      "Bash(node --check server/index.mjs)",
+      "Bash(node --check scripts/prepare-worker-runtime.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(awk 'NR>=273 && NR<=281' server/index.mjs)",
+      "Bash(python3)",
+      "Bash(node --test server/lib.test.mjs)",
+      "Bash(npm test *)",
+      "Bash(grep -n \"briefMatch\\\\|/brief\\\\$\" \"/Volumes/OUT disk1/AI Coding/gongwen-writer-copy/server/index.mjs\")",
+      "Bash(node --check server/lib.mjs)",
+      "Bash(grep -n \"renameMatch\\\\|/rename\\\\$\\\\|/api/tasks/\\\\\\(\\\\[\\\\^/\\\\]\\\\+\\\\\\)\\\\$\" \"/Volumes/OUT disk1/AI Coding/gongwen-writer-copy/server/index.mjs\")",
+      "Bash(chmod +x \"/Volumes/OUT disk1/AI Coding/gongwen-writer-copy/scripts/notarize-macos.sh)",
+      "Bash(bash -n scripts/notarize-macos.sh)",
+      "Bash(grep -n \"^async function\\\\|^function\\\\|^const [a-zA-Z].*= \\\\[\\\\|^const [a-zA-Z].*=$\\\\|^const CC_SWITCH\\\\|^const KEYCHAIN\\\\|^const SECRET_FIELDS\\\\|^const RERUN_PLANS\\\\|^const allowedOrigins\\\\|^const stepTemplate\\\\|^let modelSettings\\\\|^let persistTimer\\\\|^const server = \\\\|^await loadTasks\" server/index.mjs)",
+      "Bash(node --check server/modules/models.mjs)",
+      "Bash(node --check server/modules/search.mjs)",
+      "Bash(node --check server/modules/materials.mjs)",
+      "Bash(node --check server/modules/content.mjs)",
+      "Bash(node --check server/modules/http.mjs)",
+      "Bash(cargo check *)",
+      "Bash(npm install *)",
+      "Read(//Users/macbookpro/Library/Logs/com.local.gongwen-writer/**)",
+      "Bash(lsof -nP -iTCP:8787 -sTCP:LISTEN)",
+      "Bash(rustc --version)",
+      "Bash(cargo --version)",
+      "Bash(npm --version)",
+      "Bash(rm \"/Volumes/OUT disk1/AI Coding/gongwen-writer-copy-打包/server/lib.test.mjs\")",
+      "Bash(rm \"/Volumes/OUT disk1/AI Coding/gongwen-writer-copy-打包/worker-runtime/app/server/lib.test.mjs\")",
+      "Bash(convert *)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
