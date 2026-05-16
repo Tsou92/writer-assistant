@@ -52,7 +52,15 @@ import { corsHeaders, readBody, sendJson } from "./modules/http.mjs";
 const execFileAsync = promisify(execFile);
 
 const PORT = Number(process.env.PORT || 8787);
-const appDir = join(homedir(), "Library", "Application Support", "GongwenWriter");
+
+function resolveAppDir() {
+  if (process.platform === "win32") {
+    return join(process.env.APPDATA || join(homedir(), "AppData", "Roaming"), "GongwenWriter");
+  }
+  return join(homedir(), "Library", "Application Support", "GongwenWriter");
+}
+
+const appDir = resolveAppDir();
 const projectsDir = join(appDir, "projects");
 const settingsFile = join(appDir, "model-settings.json");
 const tasksFile = join(appDir, "tasks.json");

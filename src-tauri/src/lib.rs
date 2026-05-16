@@ -4,6 +4,8 @@ use std::{
     process::{Child, Command, Stdio},
     sync::Mutex,
 };
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
 use tauri::{Manager, RunEvent, WindowEvent};
 use tauri_plugin_updater::UpdaterExt;
 
@@ -152,15 +154,19 @@ fn start_worker(app: &tauri::App) -> Result<(), String> {
         .open(log_dir.join("worker.err.log"))
         .map_err(|error| format!("无法创建 worker stderr 日志：{error}"))?;
 
-    let child = Command::new(node_path)
-        .arg(script_path)
+    let mut cmd = Command::new(node_path);
+    cmd.arg(script_path)
         .current_dir(app_dir)
         .env("PORT", "8787")
         .env("GONGWEN_DESKTOP", "1")
         .stdin(Stdio::null())
         .stdout(Stdio::from(stdout))
-        .stderr(Stdio::from(stderr))
-        .spawn()
+        .stderr(Stdio::from(stderr));
+
+    #[cfg(target_os = "windows")]
+    cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
+
+    let child = cmd.spawn()
         .map_err(|error| format!("无法启动本地 worker：{error}"))?;
 
     *app.state::<WorkerProcess>().0.lock().map_err(|_| "worker 状态锁异常".to_string())? =
