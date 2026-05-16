@@ -40,11 +40,6 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tagName: v__VERSION__
-          releaseName: '公文材料写作助手 v__VERSION__'
-          releaseBody: 'Windows 安装包'
-          releaseDraft: true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
