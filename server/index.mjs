@@ -1855,6 +1855,13 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
+process.on("uncaughtException", (err) => {
+  console.error("[FATAL] Uncaught exception:", err);
+});
+process.on("unhandledRejection", (err) => {
+  console.error("[FATAL] Unhandled rejection:", err);
+});
+
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`Gongwen Writer worker listening on http://127.0.0.1:${PORT}`);
 });
