@@ -219,6 +219,19 @@ const LOCAL_SANITIZER_PRESETS: ModelSetting[] = [
 
 const API_BASE = import.meta.env.DEV ? "" : "http://127.0.0.1:8787";
 
+async function waitForServer(maxWait = 15000): Promise<void> {
+  const start = Date.now();
+  while (Date.now() - start < maxWait) {
+    try {
+      const res = await fetch(`${API_BASE}/api/settings/models`, { signal: AbortSignal.timeout(1500) });
+      if (res.ok) return;
+    } catch {}
+    await new Promise((r) => setTimeout(r, 400));
+  }
+}
+
+const serverReady = waitForServer();
+
 const isTauri = typeof window !== "undefined" && !!(window as any).__TAURI_INTERNALS__;
 
 type UpdateInfo = {
@@ -512,16 +525,18 @@ function App() {
   const [renameDialog, setRenameDialog] = useState<{ id: string; value: string } | null>(null);
 
   useEffect(() => {
-    request<Task[]>("/api/tasks")
-      .then((items) => {
-        setTasks(items);
-        setActiveId((current) => current || items[0]?.id || null);
-      })
-      .catch((err) => setError(err.message));
+    serverReady.then(() => {
+      request<Task[]>("/api/tasks")
+        .then((items) => {
+          setTasks(items);
+          setActiveId((current) => current || items[0]?.id || null);
+        })
+        .catch((err) => setError(err.message));
 
-    request<ModelSetting[]>("/api/settings/models")
-      .then(setModelSettings)
-      .catch((err) => setError(err.message));
+      request<ModelSetting[]>("/api/settings/models")
+        .then(setModelSettings)
+        .catch((err) => setError(err.message));
+    });
 
     let source: EventSource | null = null;
     let retry = 0;
